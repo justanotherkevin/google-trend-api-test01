@@ -8,8 +8,12 @@
     "start": "next start"
   },
   "dependencies": {
+    "google-trends-api": "^4.9.0",
+    "materialize-css": "^1.0.0-rc.2",
     "next": "9.4.4",
     "react": "16.13.1",
-    "react-dom": "16.13.1"
+    "react-dom": "16.13.1",
+    "reakit": "^1.1.2",
+    "sass": "^1.26.10"
   }
 }
