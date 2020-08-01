@@ -2,21 +2,18 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-    Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
-    sans-serif;
+  height: 100%;
+  width: 100%;
 }
-
-* {
+*,
+*:after,
+*:before {
   box-sizing: border-box;
 }
-
 body {
-  padding: 20px 20px 60px;
-  max-width: 680px;
-  margin: 0 auto;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-size: 1rem;
 }
-
 .container {
   min-height: 100vh;
   padding: 0 0.5rem;

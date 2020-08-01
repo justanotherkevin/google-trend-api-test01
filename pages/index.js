@@ -1,165 +1,184 @@
+import React from 'react'
 import Head from 'next/head'
-import { Button } from "reakit/Button";
-<Button>Button</Button>
-export default function Home() {
+
+import { makeStyles } from  '@material-ui/core/styles'
+import CssBaseline from     '@material-ui/core/CssBaseline'
+import Toolbar from         '@material-ui/core/Toolbar'
+import Paper from           '@material-ui/core/Paper'
+import Typography from      '@material-ui/core/Typography'
+import Grid from            '@material-ui/core/Grid'
+import Card from            '@material-ui/core/Card'
+import CardActionArea from  '@material-ui/core/CardActionArea'
+import CardContent from     '@material-ui/core/CardContent'
+import CardMedia from       '@material-ui/core/CardMedia'
+import Hidden from          '@material-ui/core/Hidden'
+import Link from            '@material-ui/core/Link'
+import Container from       '@material-ui/core/Container'
+
+import Layout, {siteTitle} from '../components/layout'
+import utilStyles from          '../styles/utils.module.css'
+
+
+const useStyles = makeStyles(theme => ({
+  toolbar: {
+    borderBottom: `1px solid ${theme.palette.divider}`
+  },
+  toolbarTitle: {
+    flex: 1
+  },
+  mainFeaturedPost: {
+    position: 'relative',
+    backgroundColor: theme.palette.grey[800],
+    color: theme.palette.common.white,
+    marginBottom: theme.spacing(4),
+    backgroundImage: 'url(https://source.unsplash.com/user/erondu)',
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center'
+  },
+  overlay: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    right: 0,
+    left: 0,
+    backgroundColor: 'rgba(0,0,0,.7)'
+  },
+  mainFeaturedPostContent: {
+    position: 'relative',
+    padding: theme.spacing(3),
+    [theme.breakpoints.up('md')]: {
+      padding: theme.spacing(6),
+      paddingRight: 0
+    }
+  },
+  card: {
+    display: 'flex'
+  },
+  cardDetails: {
+    flex: 1
+  },
+  cardMedia: {
+    width: 160
+  }
+}))
+
+const featuredPosts = [
+  {
+    title: 'Featured post',
+    date: 'Nov 12',
+    description:
+      'This is a wider card with supporting text below as a natural lead-in to additional content.'
+  },
+  {
+    title: 'Post title',
+    date: 'Nov 11',
+    description:
+      'This is a wider card with supporting text below as a natural lead-in to additional content.'
+  }
+]
+
+const Blog = () => {
+  const classes = useStyles()
+
   return (
-    <div className="container">
-      <div>Welcome to Next.js!</div>
-
-      <style jsx>{`
-        .container {
-          min-height: 100vh;
-          padding: 0 0.5rem;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-
-        main {
-          padding: 5rem 0;
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-
-        footer {
-          width: 100%;
-          height: 100px;
-          border-top: 1px solid #eaeaea;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-
-        footer img {
-          margin-left: 0.5rem;
-        }
-
-        footer a {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-
-        a {
-          color: inherit;
-          text-decoration: none;
-        }
-
-        .title a {
-          color: #0070f3;
-          text-decoration: none;
-        }
-
-        .title a:hover,
-        .title a:focus,
-        .title a:active {
-          text-decoration: underline;
-        }
-
-        .title {
-          margin: 0;
-          line-height: 1.15;
-          font-size: 4rem;
-        }
-
-        .title,
-        .description {
-          text-align: center;
-        }
-
-        .description {
-          line-height: 1.5;
-          font-size: 1.5rem;
-        }
-
-        code {
-          background: #fafafa;
-          border-radius: 5px;
-          padding: 0.75rem;
-          font-size: 1.1rem;
-          font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
-            DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
-        }
-
-        .grid {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          flex-wrap: wrap;
-
-          max-width: 800px;
-          margin-top: 3rem;
-        }
-
-        .card {
-          margin: 1rem;
-          flex-basis: 45%;
-          padding: 1.5rem;
-          text-align: left;
-          color: inherit;
-          text-decoration: none;
-          border: 1px solid #eaeaea;
-          border-radius: 10px;
-          transition: color 0.15s ease, border-color 0.15s ease;
-        }
-
-        .card:hover,
-        .card:focus,
-        .card:active {
-          color: #0070f3;
-          border-color: #0070f3;
-        }
-
-        .card h3 {
-          margin: 0 0 1rem 0;
-          font-size: 1.5rem;
-        }
-
-        .card p {
-          margin: 0;
-          font-size: 1.25rem;
-          line-height: 1.5;
-        }
-
-        .logo {
-          height: 1em;
-        }
-
-        @media (max-width: 600px) {
-          .grid {
-            width: 100%;
-            flex-direction: column;
-          }
-        }
-      `}</style>
-
-      <style jsx global>{`
-        html,
-        body {
-          padding: 0;
-          margin: 0;
-          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-            Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
-            sans-serif;
-        }
-
-        * {
-          box-sizing: border-box;
-        }
-
-        .container {
-          min-height: 100vh;
-          padding: 0 0.5rem;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-      `}</style>
-    </div>
+    <>
+      <CssBaseline />
+      <Container maxWidth="lg">
+        <Layout home>
+          <Head>
+            <title>{siteTitle}</title>
+          </Head>
+          <section className={utilStyles.headingMd}>
+            <p>[Your Self Introduction]</p>
+            <p>
+              (This is a sample website - you’ll be building a site like this on{' '}
+              <a href="https://nextjs.org/learn">our Next.js tutorial</a>.)
+            </p>
+          </section>
+        </Layout>
+        <Toolbar className={classes.toolbar}>
+          <Typography
+            component="h2"
+            variant="h5"
+            color="inherit"
+            align="center"
+            noWrap
+            className={classes.toolbarTitle}
+          >
+            Blog
+          </Typography>
+        </Toolbar>
+        <main>
+          {/* Main featured post */}
+          <Paper className={classes.mainFeaturedPost}>
+            {/* Increase the priority of the hero background image */}
+            {
+              <img
+                style={{ display: 'none' }}
+                src="https://source.unsplash.com/user/erondu"
+                alt="background"
+              />
+            }
+            <div className={classes.overlay} />
+            <Grid container>
+              <Grid item md={6}>
+                <div className={classes.mainFeaturedPostContent}>
+                  <Typography component="h1" variant="h3" color="inherit" gutterBottom>
+                    Title of a longer featured blog post
+                  </Typography>
+                  <Typography variant="h5" color="inherit" paragraph>
+                    Multiple lines of text that form the lede, informing new readers
+                    quickly and efficiently about what&apos;s most interesting in this
+                    post&apos;s contents.
+                  </Typography>
+                  <Link variant="subtitle1" href="#">
+                    Continue reading…
+                  </Link>
+                </div>
+              </Grid>
+            </Grid>
+          </Paper>
+          {/* End main featured post */}
+          {/* Sub featured posts */}
+          <Grid container spacing={4}>
+            {featuredPosts.map(post => (
+              <Grid item key={post.title} xs={12} md={6}>
+                <CardActionArea component="a" href="#">
+                  <Card className={classes.card}>
+                    <div className={classes.cardDetails}>
+                      <CardContent>
+                        <Typography component="h2" variant="h5">
+                          {post.title}
+                        </Typography>
+                        <Typography variant="subtitle1" color="textSecondary">
+                          {post.date}
+                        </Typography>
+                        <Typography variant="subtitle1" paragraph>
+                          {post.description}
+                        </Typography>
+                        <Typography variant="subtitle1" color="primary">
+                          Continue reading...
+                        </Typography>
+                      </CardContent>
+                    </div>
+                    <Hidden xsDown>
+                      <CardMedia
+                        className={classes.cardMedia}
+                        image="https://source.unsplash.com/random"
+                        title="Image title"
+                      />
+                    </Hidden>
+                  </Card>
+                </CardActionArea>
+              </Grid>
+            ))}
+          </Grid>
+          {/* End sub featured posts */}
+        </main>
+      </Container>
+    </>
   )
 }
+
+export default Blog
