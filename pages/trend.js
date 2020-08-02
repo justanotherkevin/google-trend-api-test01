@@ -1,34 +1,46 @@
-
+import {RealTimeTrend} from '../components/trend_by_real_time';
 const googleTrends = require('google-trends-api');
 
+// This function gets called at build time
+export async function getStaticProps() {
+  let queryData = {
+    // trendDate: new Date(),
+    geo: 'US',
+    category: 'b',
+  }
+
+  let errors = []
+  // https://github.com/pat310/google-trends-api#realtimetrends
+  const trendRes = await googleTrends.realTimeTrends(queryData,
+    function(err, results) {
+      if (err) errors.push(err)
+      else return results
+    }
+  );
+  const relatedSearch = await googleTrends.relatedQueries({keyword: 'Westminster Dog Show'},
+  function(err, results) {
+    if (err) errors.push(err)
+      else return results
+    }
+  );
+
+  const trend = await JSON.parse(trendRes)
+  const anotherTrend = await JSON.parse(relatedSearch)
+
+  return {
+    props: {
+      trend,
+      anotherTrend,
+    },
+  }
+}
 const Trend = props => {
   return (
     <div className="container">
       <h1>Trend</h1>
 
-      <ul className="collapsible">
-        <li>
-          <div className="collapsible-header"><i className="material-icons">filter_drama</i>First</div>
-          <div className="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-        </li>
-        <li>
-          <div className="collapsible-header"><i className="material-icons">place</i>Second</div>
-          <div className="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-        </li>
-        <li>
-          <div className="collapsible-header"><i className="material-icons">whatshot</i>Third</div>
-          <div className="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-        </li>
-      </ul>
-      { props.posts.length > 0 ? (
-        <ul className="collection">
-          {props.posts.map((post) => (
-            <li className="collection-item" key={`post_${post.id}`} >
-              <span className="badge">{post.id}</span>
-              {post.title}
-            </li>
-          ))}
-        </ul>
+      { props.trend ? (
+        <RealTimeTrend trendData={props.trend} />
       ) : (
         <h2>Loading</h2>
       ) }
@@ -45,21 +57,6 @@ const Trend = props => {
     </div>
   )
 }
-// This function gets called at build time
-export async function getStaticProps() {
-  // Call an external API endpoint to get posts
-  const res = await fetch('https://jsonplaceholder.typicode.com/posts')
-  const posts = await res.json()
 
-  const trendRes = await googleTrends.interestOverTime({keyword: 'Women\'s march'})
-  const trend = await JSON.parse(trendRes)
-
-  return {
-    props: {
-      posts,
-      trend,
-    },
-  }
-}
 
 export default Trend
