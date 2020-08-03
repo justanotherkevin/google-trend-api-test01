@@ -1,4 +1,4 @@
-import {RealTimeTrend} from '../components/trend_by_real_time';
+import {RealTimeTrend,RelatedQueriesDisplay} from '../components/trend_by_real_time';
 const googleTrends = require('google-trends-api');
 
 // This function gets called at build time
@@ -17,20 +17,37 @@ export async function getStaticProps() {
       else return results
     }
   );
-  const relatedSearch = await googleTrends.relatedQueries({keyword: 'Westminster Dog Show'},
-  function(err, results) {
-    if (err) errors.push(err)
+  const relatedQueriesData = await googleTrends.relatedQueries({keyword: 'stock'},
+    function(err, results) {
+      if (err) errors.push(err)
+      else return results
+    }
+  );
+  const relatedTopicsData = await googleTrends.relatedTopics({keyword: 'stock'},
+    function(err, results) {
+      if (err) errors.push(err)
+      else return results
+    }
+  );
+  const dailyTrendSearch = await googleTrends.dailyTrends({ trendDate: new Date(), geo: 'US', },
+    function(err, results) {
+      if (err) errors.push(err)
       else return results
     }
   );
 
+
   const trend = await JSON.parse(trendRes)
-  const anotherTrend = await JSON.parse(relatedSearch)
+  const dailyTrend = await JSON.parse(dailyTrendSearch)
+  const relatedQueries = await JSON.parse(relatedQueriesData)
+  const relatedTopics = await JSON.parse(relatedTopicsData)
 
   return {
     props: {
       trend,
-      anotherTrend,
+      dailyTrend,
+      relatedQueries,
+      relatedTopics,
     },
   }
 }
@@ -40,7 +57,11 @@ const Trend = props => {
       <h1>Trend</h1>
 
       { props.trend ? (
-        <RealTimeTrend trendData={props.trend} />
+        <>
+          <RealTimeTrend trendData={props.trend} />
+          <h2>*******************RELATED*********************</h2>
+          <RelatedQueriesDisplay relatedQuries={props.relatedQueries} />
+        </>
       ) : (
         <h2>Loading</h2>
       ) }
